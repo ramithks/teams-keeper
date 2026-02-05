@@ -1,78 +1,22 @@
-# Jiggle Me (Teams Edition)
+# Teams Keeper
 
-A simple Chrome extension to keep your Microsoft Teams session active.
-
-## Features
-- **Keep Teams Awake**: Simulates subtle activity on `teams.microsoft.com` and `teams.live.com` to prevent your status from going to "Away".
-- **Configurable Interval**: Choose how often to simulate activity (default: 30 seconds).
-- **No System Permissions**: Runs entirely within the browser. No native host or software installation required.
-
-## Installation
-
-1. Open Chrome and go to `chrome://extensions`.
-2. Enable **Developer mode** (toggle in the top right).
-3. Click **Load unpacked**.
-4. Select this folder (`JiggleMe`).
-
-## Usage
-
-1. Open Microsoft Teams in your browser.
-2. Click the **Jiggle Me** extension icon.
-3. Toggle the switch to **Status: Keep Awake enabled**.
-4. Adjust the interval if needed.
-
-The extension will periodically simulate a small interaction to keep your session alive. You can see logs in the developer console (F12) if you want to verify it's working.
-
-## Troubleshooting
-
-- **Not working?** Ensure you are on the Teams web page. The extension only runs on `teams.microsoft.com` and `teams.live.com`.
-- **Status still changes?** Try lowering the interval to 30 seconds or less.
-pyautogui`.  
-    - Fedora: `sudo dnf install python3-tkinter` and `pip install pyautogui`.
+Chrome extension to keep your Microsoft Teams session active (not hosted on the Chrome Web Store).
 
 ---
 
-## Project structure (scalable)
-Extension code lives under `src/`. Shared code is reused by popup and background so new features stay consistent.
+## Install (you or a friend)
 
-```
-JiggleMe/
-├── manifest.json                 # Entry: points to src/background, src/popup
-├── src/
-│   ├── shared/                   # Used by popup + background
-│   │   ├── constants.js          # Storage keys, defaults, bounds, message types
-│   │   └── storage.js            # getConfig / setConfig, clamp helpers
-│   ├── background/
-│   │   ├── background.js        # Entry: importScripts, wire Chrome APIs
-│   │   ├── config.js            # In-memory config, load/apply from storage
-│   │   ├── nativeHost.js        # Connect to native host, send jiggle
-│   │   └── scheduler.js         # Start/stop alarm, tick → jiggle
-│   └── popup/
-│       ├── popup.html
-│       ├── popup.css
-│       └── popup.js              # Form ↔ storage, sendMessage(CONFIG/PING)
-└── native_host/
-    ├── jiggle_host.py
-    ├── install_*.sh / install_windows.ps1
-    └── requirements.txt
-```
+Chrome only allows installing extensions from the Chrome Web Store when you use a .crx file — so for this extension you have to use **Load unpacked** and keep the folder.
 
-**Adding a feature**
+1. **Download** the extension: [download ZIP](https://github.com/ramithks/teams-keeper) from GitHub (or clone the repo) and unzip.
+2. Open Chrome → `chrome://extensions` → turn on **Developer mode** (top right).
+3. Click **Load unpacked** and select the `teams-keeper` folder (the one that contains `manifest.json`).
+4. **Keep the folder** — Chrome runs the extension from it. You can put it in Documents or somewhere out of the way.
+5. Open Teams in your browser and use the extension icon to turn it on.
 
-1. **New option (e.g. “only when idle”)**  
-   Add key + default in `src/shared/constants.js` (STORAGE_KEYS, DEFAULTS, BOUNDS).  
-   Extend `src/shared/storage.js` (clamp + get/set).  
-   Use in popup form and in `src/background/config.js` + scheduler/nativeHost as needed.
+## Sending to a friend
 
-2. **New scheduled action (e.g. keyboard nudge)**  
-   Add a module under `src/background/` (e.g. `keyboardHost.js`).  
-   In `background.js`, add `importScripts('keyboardHost.js')`, wire alarms or storage, and call the new module from the alarm listener or from scheduler.
+- Send them the GitHub link: https://github.com/ramithks/teams-keeper — they download the ZIP, unzip, then follow the steps above.
+- Or zip the `teams-keeper` folder yourself and send the zip; they unzip it and use **Load unpacked** on that folder.
 
-3. **New UI section**  
-   Add markup and styles in `src/popup/`, bind in `popup.js` using the same storage helpers.
-
----
-
-## Privacy
-
-The extension only talks to the local native host. No data is sent to the internet. Settings (on/off, interval, pixels) are stored in Chrome’s local storage.
+**Want no folder at all?** The only way is to publish the extension on the [Chrome Web Store](https://chrome.google.com/webstore/devconsole) (one-time $5 developer account). Then anyone can install with one click.

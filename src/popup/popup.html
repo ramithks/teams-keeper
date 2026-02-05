@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Teams Keeper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Teams Keeper</h1>
+      <p class="subtitle">Stay shown as available in Microsoft Teams</p>
+    </header>
+
+    <div id="teams-notice" class="teams-notice" hidden>
+      Switch to a Microsoft Teams tab for this to work — open <strong>teams.microsoft.com</strong> or <strong>teams.cloud.microsoft</strong>.
+    </div>
+
+    <div class="controls">
+      <label class="toggle-row">
+        <span class="label">Stay available</span>
+        <input type="checkbox" id="enabled" class="toggle">
+        <span class="slider"></span>
+      </label>
+
+      <p class="option-label">Switch chats every</p>
+      <div class="presets">
+        <button type="button" id="preset30" class="preset" data-seconds="30">30 sec</button>
+        <button type="button" id="preset60" class="preset" data-seconds="60">1 min</button>
+        <button type="button" id="preset120" class="preset" data-seconds="120">2 min</button>
+      </div>
+      <label class="custom-row">
+        <span class="custom-label">Custom</span>
+        <input type="number" id="interval" class="custom-input" min="5" max="300" value="30" placeholder="seconds">
+      </label>
+    </div>
+
+    <div id="status" class="status" role="status"></div>
+
+    <p class="hint">Turn on when you have Teams open in a tab.</p>
+  </div>
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
